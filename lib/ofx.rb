@@ -2,13 +2,15 @@ require "ofx/version"
 
 require "rest-client"
 require "json"
-require 'active_support/inflector'
 
+require "extentions/string"
 require "ofx/ofx_object"
 require "ofx/authentication"
 require "ofx/client"
 require "ofx/api_resource"
 require "ofx/beneficiary"
+require "ofx/quote"
+require "ofx/deal"
 require "ofx/ofx_error"
 
 module Ofx

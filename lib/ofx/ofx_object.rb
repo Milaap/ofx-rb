@@ -18,7 +18,7 @@ module Ofx
     def add_methods(keys)
       self.instance_eval do
         keys.each do |k|
-          self.class.send(:define_method, k.underscore) { @values[k] }
+          self.class.send(:define_method, k.to_underscore) { @values[k] }
         end
       end
     end

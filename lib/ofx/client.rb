@@ -49,7 +49,7 @@ module Ofx
     end
 
     def self.handle_api_error(resp)
-      error_obj = parse(resp).with_indifferent_access rescue {}
+      error_obj = parse(resp) rescue {}
       unless error_obj["errors"].nil?
         error_message = error_obj["errors"].map{|e| e["message"]}.join(', ')
       end

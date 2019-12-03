@@ -1,35 +1,60 @@
-# Ofx
+# OFX
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/ofx`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Welcome to OFX ruby gem! The OFX Ruby gem provides a small SDK for convenient access to the [OFX APIs][ofx/api] from applications written in the Ruby language. It provides a pre-defined set of classes for API resources that initialize themselves dynamically from API responses which allows the bindings to tolerate a number of different versions of the API.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'ofx'
+gem 'ofx-rb'
 ```
 
 And then execute:
 
-    $ bundle
+    $ bundle install
 
 Or install it yourself as:
 
-    $ gem install ofx
+    $ gem install ofx-rb
 
 ## Usage
 
-TODO: Write usage instructions here
+The library needs to be configured with environment mode "test" or "live"
+```ruby
+For live mode
+Ofx.mode = "live"
 
-## Development
+For test mode
+Ofx.mode = "test"
+```
+# Development
+## Authentication
+OFX resource APIs require access token to be sent as Authorization header.
+You can get the access token as following:
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+```ruby
+Ofx::Authentication.new("your client_id", "your client_secret").get_access_token
+```
+## Quotes API
+https://payments.developer.ofx.com/specs/quotes/create-quote
+Create a quote
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```ruby
+quote_params = {
+    "buyCurrency": "USD",
+    "buyAmount": 0,
+    "sellCurrency": "INR",
+    "sellAmount": 50,
+    "beneficiaries": 1
+}
+Ofx::Quote.create(quote_params, {"access_token" => "api access token"})
+```
+Get a already created quote
+https://payments.developer.ofx.com/specs/quotes/get-quote
 
-## Contributing
+```ruby
+Ofx::Quote.get("<existing quote id>", {"access_token" => "api access token"})
+```
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/ofx.
+[ofx/api]: https://payments.developer.ofx.com/

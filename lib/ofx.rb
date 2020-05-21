@@ -18,7 +18,7 @@ module Ofx
     attr_accessor :mode
     attr_accessor :access_token
     def api_base
-      @api_base ||= mode == 'live' ? 'https://live.api.ofx.com' : 'https://sandbox.api.ofx.com/v1'
+      @api_base ||= mode == 'live' ? 'https://live.api.ofx.com/v1' : 'https://sandbox.api.ofx.com/v1'
     end
   end
 end

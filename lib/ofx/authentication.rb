@@ -7,7 +7,11 @@ module Ofx
     end
 
     def get_access_token
-      @access_token ||= fetch_auth_token["access_token"]
+      @access_token ||= auth_token_response["access_token"]
+    end
+
+    def auth_token_response
+      @auth_token_response ||= JSON.parse(RestClient::Request.execute(auth_request))
     end
 
     private
@@ -21,11 +25,6 @@ module Ofx
           'Content-Type' => 'application/x-www-form-urlencoded'
         }
       }
-    end
-
-    def fetch_auth_token
-      response = RestClient::Request.execute(auth_request)
-      JSON.parse(response)
     end
 
   end
